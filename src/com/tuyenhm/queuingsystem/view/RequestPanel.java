@@ -51,7 +51,6 @@ public class RequestPanel extends  JPanel{
         
         if(requestData != null) {
             drawAxises(g2); 
-            //System.out.println("Drawing"); 
             List<Double> arrivalTime = requestData.getArrivalDisplayedTime(); 
             List<Double> acceptedTime = requestData.getAcceptedDisplayedTime();
             System.out.println("Accepted count: " + acceptedTime.size()); 

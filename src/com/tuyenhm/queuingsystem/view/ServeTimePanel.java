@@ -74,11 +74,8 @@ public class ServeTimePanel extends JPanel {
             int x = (int) (data.getKey() * scaleX);
             int y = HEIGHT - serverId*35 - 30;
             g.setColor(Color.black);
-            //g.drawLine(x1, y1, x1, y2);
-            //g.drawString("t" +i, x1+20, 20);
             int width = (int)(data.getValue() * scaleX);
             g.drawRect(x, y , width, height);
-            //g.drawString("tau"+i, x1, HEIGHT - 30);
             g.setColor(Color.green);
             g.fillRect(x, y, width, height);
         }
@@ -89,7 +86,7 @@ public class ServeTimePanel extends JPanel {
         List<Pair<Double, Double>> jobs = s.getProcessedJobs(); 
         for(int i = 0 ;i < jobs.size(); ++i) {
             Pair<Double, Double> job = jobs.get(i);
-            int  width ; // = job.getValue().intValue(); 
+            int  width ; 
             double left = job.getKey(); 
             double right = left + job.getValue();
             

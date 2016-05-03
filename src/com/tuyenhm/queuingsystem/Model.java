@@ -97,8 +97,8 @@ public class Model {
         Queue<Double> queue= new LinkedList<>(); 
         
         queueSize = 0 ;   
-        queueAt = new int[requestCount];
-        queueChangeTime = new double[requestCount]; 
+        queueAt = new int[requestCount*2];
+        queueChangeTime = new double[requestCount*2]; 
         
         acceptedCount = 0; 
         acceptedTime = new double[requestCount]; 
@@ -114,9 +114,6 @@ public class Model {
                 if(earliestTime < arrivalTime[i]){
                     Double duration = queue.remove(); 
                     s.assignJob(new Pair<Double, Double>(earliestTime, earliestTime + duration));
-                    //TODO: change accepted request;
-                    acceptedTime[acceptedCount] = earliestTime + duration; 
-                    acceptedCount ++; 
                     
                     //decrease number of item in queue
                     queueAt[queueSize] = queue.size(); 
@@ -129,11 +126,9 @@ public class Model {
             }
             //find free server
             Server s = getEarliestFreeServer(servers); 
-            double earliestTime = s.getFinishTimeOfLastJob(); 
-            if(earliestTime <= arrivalTime[i]){
+            //double earliestTime = s.getFinishTimeOfLastJob(); 
+            if(s.isFree(arrivalTime[i])){
                 s.assignJob(new Pair<Double, Double>(arrivalTime[i], serveTime[i]));
-                acceptedTime[acceptedCount] = arrivalTime[i] + serveTime[i]; 
-                acceptedCount ++; 
             }else {
                 if(queue.size() < queueLength) {
                     queue.add(serveTime[i]); 
@@ -146,19 +141,25 @@ public class Model {
                     System.out.println("Queue size: " + queue.size()); 
                 }
             }
-            //sort(acceptedTime, acceptedCount); 
         }
         acceptedCount = 0 ; 
         for(int i = 0 ; i < servers.size();  ++i) {
             Server s = servers.get(i); 
-            List<Pair<Double, Double>> jobs  = s.getProcessedJobs(); 
+            List<Pair<Double, Double>> jobs  = s.getProcessedJobs();
+            System.out.println("Server " + i); 
             for(int j = 0 ; j < jobs.size(); ++j) {
-               double time = jobs.get(j).getKey(); 
-               double duration = jobs.get(j).getValue(); 
-               acceptedTime[acceptedCount++] = time + duration; 
+               double start = jobs.get(j).getKey(); 
+               double requiredTime = jobs.get(j).getValue(); 
+               double end = start + requiredTime; 
+               System.out.println("Start: " + start + " end: " + end); 
+               acceptedTime[acceptedCount++] = end; 
             }
         }
         sort(acceptedTime, acceptedCount); 
+        System.out.println("Accepted Time"); 
+        for(int i = 0 ; i < acceptedCount ; ++i) {
+            System.out.println(acceptedTime[i]); 
+        }
         
         processTime(); 
     } 
@@ -218,6 +219,13 @@ public class Model {
             for(int i = leftRequest ; i <= rightRequest ; ++i) {
                 queueValues.add(queueAt[i]);
             }
+        }
+        
+        int qSize = queueValues.size(); 
+        if(qSize > 0) {
+            int lastItem = queueValues.get( qSize - 1 ); 
+            queueValues.add(lastItem); 
+            displayedQueueChangeTime.add(acceptedTime[acceptedCount -1]) ; 
         }
         
         qData.setQueueChangeTime(displayedQueueChangeTime);

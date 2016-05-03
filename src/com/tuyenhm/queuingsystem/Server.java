@@ -14,12 +14,17 @@ import javafx.util.Pair;
  * @author tuyenhuynh
  */
 public class Server {
+    //key: start time ; 
+    //value: processing time
     private List<Pair<Double, Double>> processingHistory = new ArrayList<Pair<Double, Double>>(); 
+    
     public boolean isFree(double time) {
         int size = processingHistory.size(); 
         if(size > 0) {
             Pair<Double, Double> lastServe = processingHistory.get(size - 1); 
-            return (lastServe.getValue() <= time);
+            double start = lastServe.getKey() ; 
+            double end = start + lastServe.getValue(); 
+            return (time >= end);
         }else {
             return true ; 
         } 
@@ -33,7 +38,7 @@ public class Server {
         int size = processingHistory.size(); 
         if(size > 0) {
             Pair<Double, Double> lastServe = processingHistory.get(size -1); 
-            return lastServe.getValue(); 
+            return lastServe.getKey() + lastServe.getValue(); 
         }
         return 0; 
     }
