@@ -110,27 +110,6 @@ public class ServeTimePanel extends JPanel {
                 result.add(new Pair<Double, Integer>(left, width));
             }
             
-//            
-//            if(left <= leftTime && right > leftTime && right < rightTime) {
-//                left -= leftTime; 
-//                right -= leftTime; 
-//                if(left <0){
-//                    left = 0; 
-//                } 
-//                width  =(int)( right - left); 
-//            }else if(left > leftTime &&  right > leftTime && left < rightTime && right < rightTime) {
-//                left -= leftTime; 
-//                right -= leftTime;
-//                width = (int)( right - left);
-//            }else if(left > leftTime && left <rightTime && right >= rightTime) {
-//                left -= leftTime; 
-//                right -= leftTime;
-//                if(right > rightTime){
-//                    right  = rightTime; 
-//                }
-//                width = (int)( right - left);
-//            }
-            
         }
         return result ; 
     }

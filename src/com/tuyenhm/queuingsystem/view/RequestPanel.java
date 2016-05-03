@@ -79,23 +79,27 @@ public class RequestPanel extends  JPanel{
         int size = request.size(); 
         
         if(size > 0) {
-            int i  = 0; 
-            int x1 = (int)(request.get(i)* scaleX) ; 
-            int x2 = x1 ; //(int)(request.get(i+1) * scaleX) ; 
-            int y1 = 200; // - (int)((i+ offset)* scaleY ); 
-            int y2 = 200 - (int)((i+1 + offset) * scaleY); 
-            g2.drawLine(x1, y1, x1, y2);
-            //g2.drawLine(x1, y2, x2, y2); 
+            int i, x1, x2, y1, y2 ; 
             for(i = 0 ; i <  size-1 ; ++i) {
                 x1 = (int)(request.get(i)* scaleX) ; 
                 x2 = (int)(request.get(i+1) * scaleX) ; 
-                y1 = 200 - (int)((i +1+ offset)* scaleY ); 
-                y2 = 200 - (int)((i+2 + offset) * scaleY); 
-                g2.drawLine(x1, y1, x2, y1);
-                g2.drawLine(x2, y1, x2, y2);    
+                y1 = 200 - (int)((i+ offset)* scaleY ); 
+                y2 = 200 - (int)((i+1 + offset) * scaleY); 
+                g2.drawLine(x1, y1, x1, y2);
+                g2.drawLine(x1, y2, x2, y2); 
+                if(i == size -2 ) {
+                    int y3 = 200 - (int) ((i+2 + offset) * scaleY); 
+                    g2.drawLine( x2, y2, x2, y3);
+                }
+            }
+            if(size == 1) {
+                i =0 ; 
+                x1 = (int)(request.get(i)* scaleX) ; 
+                y1 = 200 - (int)((i+ offset)* scaleY ); 
+                y2 = 200 - (int)((i+1 + offset) * scaleY); 
+                g2.drawLine(x1, y1, x1, y2);
             }
         }
-        
     }
     
     private void drawAxises(Graphics2D g) {

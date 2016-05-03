@@ -135,20 +135,30 @@ public class Model {
                 acceptedTime[acceptedCount] = arrivalTime[i] + serveTime[i]; 
                 acceptedCount ++; 
             }else {
-                
-                if(queueSize < queueLength) {
+                if(queue.size() < queueLength) {
                     queue.add(serveTime[i]); 
                     queueAt[queueSize] = queue.size(); 
                     queueChangeTime[queueSize] = arrivalTime[i]; 
                     queueSize++; 
-                    
                 }else { 
                     abortedTime[abortedCount] = arrivalTime[i]; 
                     abortedCount++;
+                    System.out.println("Queue size: " + queue.size()); 
                 }
             }
-            sort(acceptedTime, acceptedCount); 
+            //sort(acceptedTime, acceptedCount); 
         }
+        acceptedCount = 0 ; 
+        for(int i = 0 ; i < servers.size();  ++i) {
+            Server s = servers.get(i); 
+            List<Pair<Double, Double>> jobs  = s.getProcessedJobs(); 
+            for(int j = 0 ; j < jobs.size(); ++j) {
+               double time = jobs.get(j).getKey(); 
+               double duration = jobs.get(j).getValue(); 
+               acceptedTime[acceptedCount++] = time + duration; 
+            }
+        }
+        sort(acceptedTime, acceptedCount); 
         
         processTime(); 
     } 
