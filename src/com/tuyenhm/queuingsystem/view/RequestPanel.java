@@ -48,13 +48,15 @@ public class RequestPanel extends  JPanel{
         g2.setStroke(new BasicStroke(2));
         g2.drawLine(0, 0, 0 ,  HEIGHT);
         g2.drawLine(0, HEIGHT, WIDTH, HEIGHT);
-        drawAxises(g2); 
+        
         if(requestData != null) {
-            System.out.println("Drawing"); 
+            drawAxises(g2); 
+            //System.out.println("Drawing"); 
             List<Double> arrivalTime = requestData.getArrivalDisplayedTime(); 
             List<Double> acceptedTime = requestData.getAcceptedDisplayedTime();
+            System.out.println("Accepted count: " + acceptedTime.size()); 
             List<Double> abortedTime = requestData.getAbortedDisplayedTime();
-            
+            System.out.println("Aborted count: " + abortedTime.size()); 
             arrivalOffset = requestData.getFirstArrivalDisplayedOrder(); 
             acceptedOffset = requestData.getFirstAcceptedDisplayedOrder(); 
             abortedOffset = requestData.getFirstAbortedDisplayedOrder(); 
@@ -75,22 +77,38 @@ public class RequestPanel extends  JPanel{
         g2.setStroke( new BasicStroke(2));
         g2.setColor(color);
         int size = request.size(); 
-        for(int i = 0 ; i <  size - 1 ; ++i) {
+        
+        if(size > 0) {
+            int i  = 0; 
             int x1 = (int)(request.get(i)* scaleX) ; 
-            int x2 = (int)(request.get(i+1) * scaleX) ; 
-            int y1 = 200 - (int)((i+ offset)* scaleY ); 
+            int x2 = x1 ; //(int)(request.get(i+1) * scaleX) ; 
+            int y1 = 200; // - (int)((i+ offset)* scaleY ); 
             int y2 = 200 - (int)((i+1 + offset) * scaleY); 
             g2.drawLine(x1, y1, x1, y2);
-            g2.drawLine(x1, y2, x2, y2);    
+            //g2.drawLine(x1, y2, x2, y2); 
+            for(i = 0 ; i <  size-1 ; ++i) {
+                x1 = (int)(request.get(i)* scaleX) ; 
+                x2 = (int)(request.get(i+1) * scaleX) ; 
+                y1 = 200 - (int)((i +1+ offset)* scaleY ); 
+                y2 = 200 - (int)((i+2 + offset) * scaleY); 
+                g2.drawLine(x1, y1, x2, y1);
+                g2.drawLine(x2, y1, x2, y2);    
+            }
         }
+        
     }
     
     private void drawAxises(Graphics2D g) {
         int intervalHeight = (HEIGHT - 10)/10;
         g.setStroke(new BasicStroke(1));
+        int requestCount = requestData.getTotalArrivalCount(); 
+        int interval = (int)(requestCount/10) ;  
+        if(interval == 0) {
+            interval = 1 ; 
+        }
         for(int i = 1 ; i <= 10; ++i) {
             int height = HEIGHT - intervalHeight* i;
-            g.drawString("" + i, 5, height);
+            g.drawString("" + i* interval, 5, height);
             g.drawLine(0,height , WIDTH, height);
         }
     }

@@ -26,7 +26,7 @@ public class RequestData {
     private List<Double> arrivalDisplayedTime; 
     private List<Double> acceptedDisplayedTime; 
     private List<Double> abortedDisplayedTime; 
-
+    
     public int getFirstArrivalDisplayedOrder() {
         return firstArrivalDisplayedOrder;
     }
