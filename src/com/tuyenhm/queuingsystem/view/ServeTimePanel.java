@@ -69,7 +69,7 @@ public class ServeTimePanel extends JPanel {
         int serveCount = jobs.size(); 
         
         int height = 30; 
-        for (int i = 0; i < serveCount; ++i) {
+        for (int i = 0; i < serveCount-1; ++i) {
             Pair<Double, Integer> data = jobs.get(i); 
             int x = (int) (data.getKey() * scaleX);
             int y = HEIGHT - serverId*35 - 30;

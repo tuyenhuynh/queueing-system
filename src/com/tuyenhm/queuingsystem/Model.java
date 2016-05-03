@@ -80,7 +80,7 @@ public class Model {
         
         arrivalTime[0] =0; 
         for(int i = 1 ; i < requestCount ; ++i) {
-            arrivalTime[i] = arrivalTime[i-1] + interArrival[i]; 
+            arrivalTime[i] = arrivalTime[i-1] + interArrival[i -1]; 
         }
         
         //create server
@@ -135,8 +135,7 @@ public class Model {
                 acceptedTime[acceptedCount] = arrivalTime[i] + serveTime[i]; 
                 acceptedCount ++; 
             }else {
-                
-                if(queueSize < queueLength) {
+                if(queue.size() < queueLength) {
                     queue.add(serveTime[i]); 
                     queueAt[queueSize] = queue.size(); 
                     queueChangeTime[queueSize] = arrivalTime[i]; 

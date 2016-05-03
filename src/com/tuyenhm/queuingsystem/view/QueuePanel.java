@@ -66,33 +66,20 @@ public class QueuePanel extends JPanel {
     }
     
     private void drawQueue(Graphics g) {
-        
         int size = queueChangeTime.size(); 
-        if(size > 0) {
-            int i = 0; 
+        
+        
+        for(int i = 0 ; i < size -1 ; ++i) {
             int x1 = (int)(queueChangeTime.get(i)* scaleX) ; 
-            int x2 = x1; //(int)(queueChangeTime.get(i+1) * scaleX) ; 
-            int y1 = 200 ; // = 200 - (int)(queueValues.get(i)* scaleY ); 
-            int y2 = 200 - (int)(queueValues.get(i) * scaleY); 
+            int x2 = (int)(queueChangeTime.get(i+1) * scaleX) ; 
+            int y1 = 200 - (int)(queueValues.get(i)* scaleY ); 
+            int y2 = 200 - (int)(queueValues.get(i+1) * scaleY); 
             Graphics2D g2 = (Graphics2D)g; 
             g2.setColor(Color.CYAN);
             g2.setStroke(new BasicStroke(2));
             g2.drawLine(x1, y1, x2, y1);
             g2.drawLine(x2, y1, x2, y2);
-            for(i = 0 ; i < size -1   ; ++i) {
-                x1 = (int)(queueChangeTime.get(i)* scaleX) ; 
-                x2 = (int)(queueChangeTime.get(i+1) * scaleX) ; 
-                y1 = 200 - (int)(queueValues.get(i)* scaleY ); 
-                y2 = 200 - (int)(queueValues.get(i+1) * scaleY); 
-                g2.setColor(Color.CYAN);
-                g2.setStroke(new BasicStroke(2));
-                g2.drawLine(x1, y1, x2, y1);
-                g2.drawLine(x2, y1, x2, y2);
-            }
         }
-        
-        
-        
     }
     
     private void drawAxises(Graphics2D g) {
